@@ -7,6 +7,9 @@ const usersDefault = [
   },
   {
     id: 2, name: 'Rodrigo'
+  },
+  {
+    id: 3, name: 'Thaydeé'
   }
 ]
 const App = () => {
@@ -49,14 +52,25 @@ const App = () => {
   }, [users, printUsers])
 
   return (
-    <div className="App">
-      <fieldset>
-        <legend>Registro</legend>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        <button onClick={handleSearch}>Search</button>
-        <button onClick={handleAdd}>Add</button>
-      </fieldset>
-      <List users={filteredUsers} handleDelete={handleDelete} />
+    <div className="App container">
+      <div class="jumbotron mt-5">
+        <h1>memo - useMemo - useCallback</h1>
+        <div class="input-group">
+          <input
+            className="form-control"
+            placeholder="Write a name..."
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <div class="input-group-append" id="button-addon3">
+            <button className="btn btn-outline-secondary" onClick={handleSearch}>Search</button>
+            <button className="btn btn-outline-success" onClick={handleAdd}>Add</button>
+          </div>
+        </div>
+        <br />
+        <List users={filteredUsers} handleDelete={handleDelete} />
+      </div>
     </div>
   )
 }

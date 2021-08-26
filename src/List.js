@@ -6,7 +6,7 @@ export default memo(({ users, handleDelete }) => {
         console.log('list render');
     });
     return (
-        <ul>
+        <ul className="list-group">
             {users && users.map(user => <ItemList key={user.id} user={user} handleDelete={handleDelete} />)}
         </ul>
     )

@@ -5,9 +5,9 @@ export default memo(({ user, handleDelete }) => {
         console.log('item render');
     });
     return (
-        <li>
+        <li className="list-group-item d-flex justify-content-between align-items-center">
             {user.name} &nbsp;
-            <button onClick={() => handleDelete(user.id)}>Delete</button>
+            <button className="btn btn-outline-danger" onClick={() => handleDelete(user.id)}>Delete</button>
         </li>
     )
 })
