@@ -1,25 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import List from './List'
 
-function App() {
+const usersDefault = [
+  {
+    id: 1, name: 'Erick'
+  },
+  {
+    id: 2, name: 'Rodrigo'
+  }
+]
+const App = () => {
+  const [users, setUsers] = useState(usersDefault)
+  const [name, setName] = useState('')
+  const [search, setSearch] = useState('')
+
+  const handleAdd = () => {
+    const newUser = {
+      id: Date.now(),
+      name
+    }
+    setUsers([...users, newUser])
+    setName('')
+    setSearch('')
+  }
+
+  const handleDelete = useCallback((userId) => {
+    setUsers(users.filter(user => user.id !== userId))
+  }, [users])
+
+  const handleSearch = () => {
+    setSearch(name)
+  }
+
+  const printUsers = useCallback(() => {
+    console.log('changed users', { users });
+  }, [users])
+
+  const filteredUsers = useMemo(() =>
+    users.filter(user => user.name.toLowerCase().includes(search.toLowerCase())
+    ), [users, search])
+
+  useEffect(() => {
+    console.log('app render');
+  })
+
+  useEffect(() => {
+    printUsers()
+  }, [users, printUsers])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <fieldset>
+        <legend>Registro</legend>
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <button onClick={handleSearch}>Search</button>
+        <button onClick={handleAdd}>Add</button>
+      </fieldset>
+      <List users={filteredUsers} handleDelete={handleDelete} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
